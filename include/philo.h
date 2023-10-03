@@ -6,7 +6,7 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 15:14:30 by crocha-s          #+#    #+#             */
-/*   Updated: 2023/10/03 15:24:30 by crocha-s         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:17:50 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_table
 	int	philosophers;
 	int	time_to_die;
 	int time_to_eat;
-	int	time_to_die;
+	int	time_to_sleep;
 	int	times_must_eat;
 	int	is_full;
 	int	finish_flag;
