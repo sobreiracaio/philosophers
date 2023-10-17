@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 20:28:05 by admin             #+#    #+#             */
-/*   Updated: 2023/10/17 22:10:08 by admin            ###   ########.fr       */
+/*   Updated: 2023/10/17 22:28:05 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void start_padlocks (t_table *table)
     if(pthread_mutex_init(&table->eat_padlock, NULL))
         exit_error("Unable to init eat mutex!");
     if(pthread_mutex_init(&table->finish_padlock,NULL))
-        exit_error("Unable to initiate finish mutex!",table, NULL)
+        exit_error("Unable to initiate finish mutex!",table, NULL);
 }
 
 void call_philosophers(t_table *table)
