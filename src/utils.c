@@ -3,25 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 15:26:58 by crocha-s          #+#    #+#             */
-/*   Updated: 2023/10/03 16:56:32 by crocha-s         ###   ########.fr       */
+/*   Created: 2023/10/17 19:00:04 by admin             #+#    #+#             */
+/*   Updated: 2023/10/17 19:33:35 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void exit_error(char *msg, t_table *table, int error_nbr)
+int ft_atoi (char *number)
 {
-	printf("Error: %s", msg);
-	if (error_nbr == 1)
-		clean_table(table);
-	if (error_nbr == 2)
-		destroy_lockers(table);
-	if (error_nbr == 3)
-		finish_dinner(table);
-	exit(1);
+    int result;
+    int sign;
+
+    sign = 1;
+    result = 1;
+    
+    if(*number == '+' || *number == '-')
+    {
+        if(*number == '-')
+            sign *= -1;
+        number++;
+    }
+    while (*number)
+    {
+        if(*number < '0' && *number > '9')
+            return (-1);
+        else if (*number >= '0' || *number <= '9')
+            result = (result *10) + (*number - '0');
+        number++;        
+    }
+    return (result * sign);
 }
 
-int ft_atoi()
+void exit_error(char *msg, t_table *table, int number)
+{
+    printf("Error: %s\n", msg);
+    if (number == 1)
+        clean_table(table);
+    if (number == 2)
+        destroy_padlocks(table);
+    if (number == 3)
+        finish_dinner(table);
+    exit(1);
+}
