@@ -6,11 +6,44 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:00:04 by admin             #+#    #+#             */
-/*   Updated: 2023/10/17 19:33:35 by admin            ###   ########.fr       */
+/*   Updated: 2023/10/18 20:31:01 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+void advance_time(t_philo *philo, long long stop)
+{
+    long long begin;
+    
+    begin = now();
+    while(!is_time_to_finish(philo, NO) && (now() - begin) < stop)
+        usleep(100);
+}
+
+void    print_action(t_philo *philo, const char *status)
+{
+    long long time;
+    
+    pthread_mutex_lock(&philo->table->print_padlock);
+    if (!is_time_to_finish(philo, NO))
+    {
+        time = now() - philo->table->start_time;
+        printf("%lld %d %s\n", time, philo->id, status);
+    }
+    phtread_mutex_unlock(&philo->table->print_padlock);
+    if (status[0] == 'f')
+        printf("%s\n", FINISH_MSG);
+}
+
+long long now(void)
+{
+    struct timeval timeval;
+    
+    gettimeofday(&timeval, NULL);
+    return ((timeval.tv_sec * 1000) + (timeval.tv_usec /1000));
+    
+}
 
 int ft_atoi (char *number)
 {

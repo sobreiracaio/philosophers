@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:56:24 by admin             #+#    #+#             */
-/*   Updated: 2023/10/17 18:05:53 by admin            ###   ########.fr       */
+/*   Updated: 2023/10/18 19:55:30 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,15 @@ typedef struct s_table
     pthread_mutex_t finish_padlock;
  }  t_table;
 
-
-
+# define YES 1
+# define NO 0
+# define TAKE "has taken a fork"
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+# define DIE "died"
+# define FINISH "f"
+# define FINISH_MSG "All philosophers ate enough!"
 
 
 #endif
