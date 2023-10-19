@@ -6,13 +6,36 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 19:20:18 by admin             #+#    #+#             */
-/*   Updated: 2023/10/18 20:32:57 by admin            ###   ########.fr       */
+/*   Updated: 2023/10/19 21:35:28 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-
+void time_to_eat(t_philo *philo)
+{
+    if (philo->id % 2 == 0)
+    {
+        pthread_mutex_lock(&philo->table->fork_padlock[philo->l_fork]);
+        pthread_mutex_lock(&philo->table->fork_padlock[philo->r_fork]);
+    }
+    else
+    {
+        pthread_mutex_lock(&philo->table->fork_padlock[philo->r_fork]);
+        pthread_mutex_lock(&philo->table->fork_padlock[philo->l_fork]);
+    }
+    print_action(philo, TAKE);
+	print_action(philo, TAKE);
+	print_action(philo, EAT);
+	advance_time(philo, philo->table->time_to_eat);
+	pthread_mutex_lock(&philo->table->eat_padlock);
+	philo->eat_count++;
+	philo->last_eat = now();
+	pthread_mutex_unlock(&philo->table->eat_padlock);
+	pthread_mutex_unlock(&philo->table->fork_padlock[philo->r_fork]);
+	pthread_mutex_unlock(&philo->table->fork_padlock[philo->l_fork]);
+    
+}
 
 int lone_philosopher(t_table *table)
 {

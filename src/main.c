@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 20:28:05 by admin             #+#    #+#             */
-/*   Updated: 2023/10/17 22:28:05 by admin            ###   ########.fr       */
+/*   Updated: 2023/10/19 20:38:23 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void call_philosophers(t_table *table)
     {
         table->philo[i].id = i + 1;
         table->philo[i].l_fork = i;
-        table->philo[i].r_fork = (i +1) % table->philosophers;
+        table->philo[i].r_fork = (i + 1) % table->philosophers;
         table->philo[i].eat_count = 0;
         table->philo[i].last_eat = table->start_time;
         table->philo[i].table = table;
@@ -84,6 +84,26 @@ void set_table(t_table *table, int ac, char **av)
     table->finish_flag = 0;
 }
 
+void start_monitor (t_table *table)
+{
+    int i;
+    int continue_flag;
+
+    continue_flag = 1;
+    while(continue_flag)
+    {
+        i = -1;
+        table->ate_enough = 0;
+        while (++i < table->philosophers)
+        {
+            if (continue_flag && is_someone_dead_or_full(&table->philo[i]))
+                continue_flag = 0;
+        }
+        usleep(10);
+    }
+    finish_dinner(table);
+}
+
 int main(int ac, char**av)
 {
     t_table table;
@@ -91,4 +111,6 @@ int main(int ac, char**av)
     set_table(&table, ac, av);
     call_philosophers(&table);
     start_padlocks(&table);
+    philosophers_into_threads(&table);
+    start_monitor(&table);
 }
