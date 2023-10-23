@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 20:28:05 by admin             #+#    #+#             */
-/*   Updated: 2023/10/19 20:38:23 by admin            ###   ########.fr       */
+/*   Updated: 2023/10/23 22:16:59 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int philosophers_into_threads(t_table *table)
     return (0);
 }
 
-void start_padlocks (t_table *table)
+void start_mutexes (t_table *table)
 {
     int i;
     
@@ -39,8 +39,8 @@ void start_padlocks (t_table *table)
     if(pthread_mutex_init(&table->print_padlock,NULL))
         exit_error("Unable to init print mutex!", table, 2);
     if(pthread_mutex_init(&table->eat_padlock, NULL))
-        exit_error("Unable to init eat mutex!");
-    if(pthread_mutex_init(&table->finish_padlock,NULL))
+        exit_error("Unable to init eat mutex!", table, 2);
+    if(pthread_mutex_init(&table->finish_padlock,2))
         exit_error("Unable to initiate finish mutex!",table, NULL);
 }
 
@@ -58,7 +58,7 @@ void call_philosophers(t_table *table)
     {
         table->philo[i].id = i + 1;
         table->philo[i].l_fork = i;
-        table->philo[i].r_fork = (i + 1) % table->philosophers;
+        table->philo[i].r_fork = (i + 1) % table->philosophers; // tentar sem "% table->..."
         table->philo[i].eat_count = 0;
         table->philo[i].last_eat = table->start_time;
         table->philo[i].table = table;
@@ -110,7 +110,7 @@ int main(int ac, char**av)
     
     set_table(&table, ac, av);
     call_philosophers(&table);
-    start_padlocks(&table);
+    start_mutexes(&table);
     philosophers_into_threads(&table);
     start_monitor(&table);
 }
