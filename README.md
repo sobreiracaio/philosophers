@@ -8,7 +8,7 @@ This project provides a solution to this problem by creating a simulation of the
 
 ## Compilation
 
-To run this project, go to the philo directory and build the project by using the Makefile provided by typing:
+To run this project, go to the "src" directory and build the project by using the Makefile provided by typing:
 
    ```
    make
